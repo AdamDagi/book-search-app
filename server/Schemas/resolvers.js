@@ -3,7 +3,7 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        users: async () => {
+        me: async () => {
             return User.findOne({_id: "62100875d0f40c38d408b634"})
         }
     },
@@ -12,15 +12,23 @@ const resolvers = {
         loginUser: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             const token = signToken(user);
-            console.log (user)
-            console.log(token);
             return { token, user };
         },
-        addUser: async (parent, body) => {
-            return User.create(body);
+        addUser: async (parent, {username, email, password}) => {
+            const user = await User.create({username, email, password});
+            const token = signToken(user);
+            return { token, user };
         },
-        // saveBook: async () => {},
-        // removeBook: async () => {},
+        // saveBook: async (parent, {authors, description, title, bookId, image, link}) => {
+        //     const user = User.findOneAndUpdate(authors, description, title, bookId, image, link);
+        //     const token = signToken(user);
+        //     return { token, user };
+        // },
+        // removeBook: async (parent, {bookId}) => {
+        //     const user = User.findOneAndUpdate(bookId);
+        //     const token = signToken(user);
+        //     return { token, user };
+        // },
         // addThought: async (parent, { thoughtText, thoughtAuthor }) => {
         //     return Thought.create({ thoughtText, thoughtAuthor });
         // },
