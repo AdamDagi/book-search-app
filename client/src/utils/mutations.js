@@ -14,24 +14,22 @@ export const LOGIN_USER = gql`
   }
 `;
 
-// export const ADD_USER = gql`
-//   mutation addComment($thoughtId: ID!, $commentText: String!) {
-//     addComment(thoughtId: $thoughtId, commentText: $commentText) {
-//       _id
-//       thoughtText
-//       thoughtAuthor
-//       createdAt
-//       comments {
-//         _id
-//         commentText
-//         createdAt
-//       }
-//     }
-//   }
-// `;
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+        email
+        bookCount
+      }
+    }
+  }
+`;
 
 // export const SAVE_BOOK = gql`
-//   mutation addComment($thoughtId: ID!, $commentText: String!) {
+//   mutation saveBook($thoughtId: ID!, $commentText: String!) {
 //     addComment(thoughtId: $thoughtId, commentText: $commentText) {
 //       _id
 //       thoughtText
