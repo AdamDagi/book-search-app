@@ -37,8 +37,8 @@ const SignupForm = () => {
         variables: {username: userFormData.username, email: userFormData.email, password: userFormData.password},
       });
 
-      const { token, user } = response;
-      console.log(user);
+      const { token, user } = response.data.addUser;
+
       Auth.login(token);
       // const response = await createUser(userFormData);
 

@@ -28,21 +28,18 @@ export const ADD_USER = gql`
   }
 `;
 
-// export const SAVE_BOOK = gql`
-//   mutation saveBook($thoughtId: ID!, $commentText: String!) {
-//     addComment(thoughtId: $thoughtId, commentText: $commentText) {
-//       _id
-//       thoughtText
-//       thoughtAuthor
-//       createdAt
-//       comments {
-//         _id
-//         commentText
-//         createdAt
-//       }
-//     }
-//   }
-// `;
+export const SAVE_BOOK = gql`
+  mutation saveBook($authors: [String!], $description: String!, $title: String!, $bookId: String!, $image: String!, $link: String!, $token: String!) {
+    saveBook(authors: $authors, description: $description, title: $title, bookId: $bookId, image: $image, link: $link, token: $token) {
+      user {
+        _id
+        username
+        email
+        bookCount
+      }
+    }
+  }
+`;
 
 // export const REMOVE_BOOK = gql`
 //   mutation addComment($thoughtId: ID!, $commentText: String!) {
