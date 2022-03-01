@@ -73,18 +73,17 @@ const SearchBooks = () => {
 
     try {
       const response = await saveBookApollo({
-        veriables: {
+        variables: {
           authors: bookToSave?.authors || '', 
           description: bookToSave?.description || '', 
           title: bookToSave?.title || '', 
-          bookId: bookToSave?.bookId || '', 
+          bookId: Number(bookToSave?.bookId), 
           image: bookToSave?.image || '', 
           link: bookToSave?.link || '', 
           token: token || ''
         }
       });
-
-      if (!response.ok) {
+      if (!response) {
         throw new Error('something went wrong!');
       }
 

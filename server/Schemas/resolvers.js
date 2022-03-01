@@ -1,5 +1,9 @@
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const jwt = require('jsonwebtoken');
+
+const secret = 'mysecretsshhhhh';
+const expiration = '2h';
 
 const resolvers = {
     Query: {
@@ -21,9 +25,16 @@ const resolvers = {
         },
         saveBook: async (parent, {authors, description, title, bookId, image, link, token}) => {
             console.log(authors);
-            const user = await User.findOneAndUpdate({token}, {savedBooks:{authors, description, title, bookId, image, link}});
-            
-            return { ok: true };
+            const body = {authors, description, title, bookId, image, link};
+            console.log(body);
+            const { data } = jwt.verify(token, secret, { maxAge: expiration });
+            const user = await User.findOneAndUpdate(
+                { _id: data._id },
+                { $addToSet: { savedBooks: body } },
+                { new: true, runValidators: true }
+            );
+            console.log(user);
+            return user;
         },
         // removeBook: async (parent, {bookId}) => {
         //     const user = User.findOneAndUpdate(bookId);
