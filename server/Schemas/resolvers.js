@@ -7,8 +7,14 @@ const expiration = '2h';
 
 const resolvers = {
     Query: {
-        me: async () => {
-            return User.findOne({_id: "62100875d0f40c38d408b634"})
+        me: async (parent, { token }) => {
+            console.log("kisunia1");
+            const { data } = jwt.verify(token, secret, { maxAge: expiration });
+            console.log(data);
+            const user = await User.findOne({_id: data._id});
+            console.log("modelUSER");
+            console.log(user);
+            return user;
         }
     },
 
