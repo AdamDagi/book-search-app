@@ -6,11 +6,9 @@ const { signToken } = require('../utils/auth');
 module.exports = {
   // get a single user by either their id or their username
   async getSingleUser({ user = null, params }, res) {
-    console.log("chika");
     const foundUser = await User.findOne({
       $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
     });
-    console.log("ptiza")
 
     if (!foundUser) {
       return res.status(400).json({ message: 'Cannot find a user with this id!' });
@@ -47,7 +45,6 @@ module.exports = {
   // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
   // user comes from `req.user` created in the auth middleware function
   async saveBook({ user, body }, res) {
-    console.log(user);
     try {
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
